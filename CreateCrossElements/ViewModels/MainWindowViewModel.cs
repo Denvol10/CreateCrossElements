@@ -70,7 +70,7 @@ namespace CreateCrossElements.ViewModels
 
         private void OnCloseWindowCommandExecuted(object parameter)
         {
-            //SaveSettings();
+            SaveSettings();
             RevitCommand.mainView.Close();
         }
 
@@ -82,10 +82,32 @@ namespace CreateCrossElements.ViewModels
 
         #endregion
 
+        private void SaveSettings()
+        {
+            Properties.Settings.Default.BlockElementIds = BlockElementIds;
+            Properties.Settings.Default.Save();
+        }
+
         #region Конструктор класса MainWindowViewModel
         public MainWindowViewModel(RevitModelForfard revitModel)
         {
             RevitModel = revitModel;
+
+            #region Инициализация свойств из Settings
+
+            #region Инициализация блоков
+            if (!(Properties.Settings.Default.BlockElementIds is null))
+            {
+                string blockElemIdsInSettings = Properties.Settings.Default.BlockElementIds;
+                if (RevitModel.IsElementsExistInModel(blockElemIdsInSettings) && !string.IsNullOrEmpty(blockElemIdsInSettings))
+                {
+                    BlockElementIds = blockElemIdsInSettings;
+                    RevitModel.GetBlocksBySettings(blockElemIdsInSettings);
+                }
+            }
+            #endregion
+
+            #endregion
 
             #region Команды
             GetBlockElementsCommand = new LambdaCommand(OnGetBlockElementsCommandExecuted, CanGetBlockElementsCommandExecute);

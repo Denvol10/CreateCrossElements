@@ -46,5 +46,20 @@ namespace CreateCrossElements
         }
         #endregion
 
+        // Проверка на то существуют ли блоки в модели
+        public bool IsElementsExistInModel(string elemIdsInSettings)
+        {
+            var elemIds = RevitGeometryUtils.GetIdsByString(elemIdsInSettings);
+
+            return RevitGeometryUtils.IsElemsExistInModel(Doc, elemIds, typeof(FamilyInstance));
+        }
+
+        // Получение блоков из Settings
+        public void GetBlocksBySettings(string elemIdsInSettings)
+        {
+            var elemIds = RevitGeometryUtils.GetIdsByString(elemIdsInSettings);
+            BlockElements = RevitGeometryUtils.GetElementsById(Doc, elemIds);
+        }
+
     }
 }
