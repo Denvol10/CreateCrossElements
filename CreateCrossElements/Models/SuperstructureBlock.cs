@@ -17,6 +17,7 @@ namespace CreateCrossElements.Models
         public List<double> BlockParameters { get; set; }
         public List<XYZ> PointsOnAxis { get; set; }
         public XYZ NormalVector { get; set; }
+        public XYZ YVector { get; set; }
         private double _distanceBetweenAdaptivePoints = UnitUtils.ConvertToInternalUnits(1, UnitTypeId.Meters);
 
         public SuperstructureBlock(Document doc, Element blockElem, double height)
@@ -28,20 +29,52 @@ namespace CreateCrossElements.Models
             BlockParameters = GetCrossSectionPlacementParameters();
             PointsOnAxis = GetPointsOnAxis();
             NormalVector = GetNormalVector(doc);
+            YVector = GetYVector(doc);
         }
 
-        public List<XYZ> GetFirstCrossElementPoints()
+        //public List<XYZ> GetFirstCrossElementPoints()
+        //{
+        //    var points = PointsOnAxis.Select(p => p + NormalVector * BlockHeight).ToList();
+
+        //    return points;
+        //}
+
+        //public List<XYZ> GetSecondCrossElementPoints()
+        //{
+        //    var points = PointsOnAxis.Select(p => p + NormalVector * (BlockHeight - _distanceBetweenAdaptivePoints)).ToList();
+
+        //    return points;
+        //}
+
+        //public List<XYZ> GetThirdCrossElementPoints(bool isChangeSite)
+        //{
+        //    var points = PointsOnAxis.Select(p => p + NormalVector * BlockHeight + YVector * _distanceBetweenAdaptivePoints).ToList();
+
+        //    return points;
+        //}
+
+        public List<(XYZ First, XYZ Second, XYZ Third)> GetPointsForCrossElements(bool isChangeSite)
         {
-            var points = PointsOnAxis.Select(p => p + NormalVector * BlockHeight).ToList();
+            var adaptivePoints = new List<(XYZ, XYZ, XYZ)>(CountCrossSection);
+            foreach(var axisPoint in PointsOnAxis)
+            {
+                XYZ firstPoint = axisPoint + NormalVector * BlockHeight;
+                XYZ secondPoint = axisPoint + NormalVector * (BlockHeight - _distanceBetweenAdaptivePoints);
+                XYZ thirdPoint;
+                if (isChangeSite)
+                {
+                    thirdPoint = firstPoint + YVector * _distanceBetweenAdaptivePoints;
+                }
+                else
+                {
+                    thirdPoint = firstPoint + YVector.Negate() * _distanceBetweenAdaptivePoints;
 
-            return points;
-        }
+                }
 
-        public List<XYZ> GetSecondCrossElementPoints()
-        {
-            var points = PointsOnAxis.Select(p => p + NormalVector * (BlockHeight - _distanceBetweenAdaptivePoints)).ToList();
+                adaptivePoints.Add((firstPoint, secondPoint, thirdPoint));
+            }
 
-            return points;
+            return adaptivePoints;
         }
 
         private List<XYZ> GetPointsOnAxis()
@@ -74,6 +107,20 @@ namespace CreateCrossElements.Models
             }
 
             return normalVector;
+        }
+
+        private XYZ GetYVector(Document doc)
+        {
+            var blockAdaptivePoints = AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(BlockElement as FamilyInstance);
+            var firstReferencePoint = doc.GetElement(blockAdaptivePoints.FirstOrDefault()) as ReferencePoint;
+            var thirdReferencePoint = doc.GetElement(blockAdaptivePoints.ElementAt(2)) as ReferencePoint;
+
+            XYZ firstPoint = firstReferencePoint.Position;
+            XYZ thirdPoint = thirdReferencePoint.Position;
+
+            XYZ yVector = (thirdPoint - firstPoint).Normalize();
+
+            return yVector;
         }
 
         // Получение линии по низу блока
