@@ -12,6 +12,7 @@ using Autodesk.Revit.DB.Architecture;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CreateCrossElements.Infrastructure;
+using CreateCrossElements.Models;
 
 namespace CreateCrossElements.ViewModels
 {
@@ -44,7 +45,27 @@ namespace CreateCrossElements.ViewModels
         }
         #endregion
 
+        #region Список семейств и их типоразмеров
+        private ObservableCollection<FamilySymbolSelector> _genericModelFamilySymbols = new ObservableCollection<FamilySymbolSelector>();
+        public ObservableCollection<FamilySymbolSelector> GenericModelFamilySymbols
+        {
+            get => _genericModelFamilySymbols;
+            set => Set(ref _genericModelFamilySymbols, value);
+        }
+        #endregion
 
+        #region Выбранный типоразмер семейства
+        private FamilySymbolSelector _familySymbolName;
+        public FamilySymbolSelector FamilySymbolName
+        {
+            get => _familySymbolName;
+            set => Set(ref _familySymbolName, value);
+        }
+        #endregion
+
+        #region Индекс выбранного семейства
+        private int _familySymbolIndex = Properties.Settings.Default.FamilySymbolIndex;
+        #endregion
 
         #region Команды
 
@@ -85,6 +106,7 @@ namespace CreateCrossElements.ViewModels
         private void SaveSettings()
         {
             Properties.Settings.Default.BlockElementIds = BlockElementIds;
+            Properties.Settings.Default.FamilySymbolIndex = GenericModelFamilySymbols.IndexOf(FamilySymbolName);
             Properties.Settings.Default.Save();
         }
 
@@ -92,6 +114,8 @@ namespace CreateCrossElements.ViewModels
         public MainWindowViewModel(RevitModelForfard revitModel)
         {
             RevitModel = revitModel;
+
+            GenericModelFamilySymbols = RevitModel.GetFamilySymbolNames();
 
             #region Инициализация свойств из Settings
 
@@ -104,6 +128,13 @@ namespace CreateCrossElements.ViewModels
                     BlockElementIds = blockElemIdsInSettings;
                     RevitModel.GetBlocksBySettings(blockElemIdsInSettings);
                 }
+            }
+            #endregion
+
+            #region Инициализация значения типоразмера семейства
+            if (_familySymbolIndex >= 0 && _familySymbolIndex <= GenericModelFamilySymbols.Count - 1)
+            {
+                FamilySymbolName = GenericModelFamilySymbols.ElementAt(_familySymbolIndex);
             }
             #endregion
 
