@@ -106,11 +106,14 @@ namespace CreateCrossElements
             {
                 trans.Start();
                 var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(3), blockHeight);
-                foreach (var point in superstructureBlock.GetFirstCrossElementPoints(Doc))
+                foreach (var point in superstructureBlock.GetFirstCrossElementPoints())
                 {
                     Doc.FamilyCreate.NewReferencePoint(point);
                 }
-
+                foreach (var point in superstructureBlock.GetSecondCrossElementPoints())
+                {
+                    Doc.FamilyCreate.NewReferencePoint(point);
+                }
 
                 trans.Commit();
             }

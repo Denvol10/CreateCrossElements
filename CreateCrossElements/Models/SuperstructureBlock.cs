@@ -15,20 +15,31 @@ namespace CreateCrossElements.Models
         public Line BlockAxis { get; set; }
         public int CountCrossSection { get; set; }
         public List<double> BlockParameters { get; set; }
+        public List<XYZ> PointsOnAxis { get; set; }
+        public XYZ NormalVector { get; set; }
+        private double _distanceBetweenAdaptivePoints = UnitUtils.ConvertToInternalUnits(1, UnitTypeId.Meters);
 
         public SuperstructureBlock(Document doc, Element blockElem, double height)
         {
             BlockElement = blockElem;
-            BlockHeight = height;
+            BlockHeight = UnitUtils.ConvertToInternalUnits(height, UnitTypeId.Millimeters);
             BlockAxis = GetBlockAxis(doc, blockElem);
             CountCrossSection = GetCountCrossSection();
             BlockParameters = GetCrossSectionPlacementParameters();
+            PointsOnAxis = GetPointsOnAxis();
+            NormalVector = GetNormalVector(doc);
         }
 
-        public List<XYZ> GetFirstCrossElementPoints(Document doc)
+        public List<XYZ> GetFirstCrossElementPoints()
         {
-            double height = UnitUtils.ConvertToInternalUnits(BlockHeight, UnitTypeId.Millimeters);
-            var points = GetPointsOnAxis().Select(p => p + GetNormalVector(doc) * height).ToList();
+            var points = PointsOnAxis.Select(p => p + NormalVector * BlockHeight).ToList();
+
+            return points;
+        }
+
+        public List<XYZ> GetSecondCrossElementPoints()
+        {
+            var points = PointsOnAxis.Select(p => p + NormalVector * (BlockHeight - _distanceBetweenAdaptivePoints)).ToList();
 
             return points;
         }
