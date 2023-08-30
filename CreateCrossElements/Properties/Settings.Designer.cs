@@ -82,5 +82,17 @@ namespace CreateCrossElements.Properties {
                 this["IsCreateDown"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double RotationAngle {
+            get {
+                return ((double)(this["RotationAngle"]));
+            }
+            set {
+                this["RotationAngle"] = value;
+            }
+        }
     }
 }

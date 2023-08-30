@@ -10,7 +10,7 @@
         Background="#f0f0f0"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Height="282"
+        Height="302"
         Width="350">
     <Window.DataContext>
         <vm:MainWindowViewModel />
@@ -98,8 +98,8 @@
         <GroupBox Header="Поперечные элементы"
                   Style="{StaticResource BorderGroupStyle}">
             <UniformGrid Columns="2">
-                <UniformGrid Rows="2"
-                             Height="60">
+                <UniformGrid Rows="3"
+                             Height="80">
                     <TextBlock Text="Семейство элемента"
                                VerticalAlignment="Center"
                                Style="{StaticResource TextAboveButton}" />
@@ -109,7 +109,7 @@
                               ItemsSource="{Binding GenericModelFamilySymbols}"
                               SelectedItem="{Binding FamilySymbolName}" />
                 </UniformGrid>
-                <UniformGrid Rows="2">
+                <UniformGrid Rows="3">
                     <CheckBox Content="Изменить сторону"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
@@ -120,6 +120,18 @@
                               HorizontalAlignment="Left"
                               Margin="10,5,0,0"
                               IsChecked="{Binding IsCreateDown}" />
+                    <DockPanel Margin="0,4,0,0">
+                        <TextBlock Text="Угол поворота"
+                                   Style="{StaticResource TextAboveButton}"
+                                   Margin="10,0,0,0" />
+                        <TextBox Text="{Binding RotationAngle, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="20"
+                                 Width="40"
+                                 HorizontalAlignment="Right"
+                                 TextAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0,0,20,0" />
+                    </DockPanel>
                 </UniformGrid>
             </UniformGrid>
         </GroupBox>

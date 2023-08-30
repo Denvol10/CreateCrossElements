@@ -94,6 +94,15 @@ namespace CreateCrossElements.ViewModels
         }
         #endregion
 
+        #region Угол поворота поперечного элемента
+        private double _rotationAngle = Properties.Settings.Default.RotationAngle;
+        public double RotationAngle
+        {
+            get => _rotationAngle;
+            set => Set(ref _rotationAngle, value);
+        }
+        #endregion
+
         #region Команды
 
         #region Получение блоков пролетного строения
@@ -157,6 +166,7 @@ namespace CreateCrossElements.ViewModels
             Properties.Settings.Default.BlockHeight = BlockHeight;
             Properties.Settings.Default.IsChangeSite = IsChangeSite;
             Properties.Settings.Default.IsCreateDown = IsCreateDown;
+            Properties.Settings.Default.RotationAngle = RotationAngle;
             Properties.Settings.Default.Save();
         }
 
