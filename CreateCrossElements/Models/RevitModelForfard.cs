@@ -12,6 +12,7 @@ using Autodesk.Revit.DB.Architecture;
 using System.Collections.ObjectModel;
 using CreateCrossElements.Models;
 using CreateCrossElements.Models.Filters;
+using System.IO;
 
 namespace CreateCrossElements
 {
@@ -83,9 +84,23 @@ namespace CreateCrossElements
         }
         #endregion
 
-        public void CreateCrossElementsInModel(FamilySymbolSelector familySymbolName, double blockHeight, bool isChangeSite, bool isCreateDown)
+        public void CreateCrossElementsInModel(FamilySymbolSelector familyAndSymbolName,
+                                               double blockHeight,
+                                               bool isChangeSite,
+                                               bool isCreateDown,
+                                               double rotationAngle)
         {
+            FamilySymbol fSymbol = GetFamilySymbolByName(familyAndSymbolName);
 
+            string path = @"O:\Revit Infrastructure Tools\CreateCrossElements\CreateCrossElements\result.txt";
+            using(StreamWriter sw = new StreamWriter(path, false, Encoding.Default))
+            {
+                var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(2));
+                foreach(var parameter in superstructureBlock.BlockParameters)
+                {
+                    sw.WriteLine(parameter);
+                }
+            }
         }
 
         #region Получение типоразмера по имени

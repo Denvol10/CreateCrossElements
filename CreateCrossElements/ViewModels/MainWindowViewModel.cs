@@ -127,7 +127,7 @@ namespace CreateCrossElements.ViewModels
 
         private void OnCreateCrossElementsCommandExecuted(object parameter)
         {
-            RevitModel.CreateCrossElementsInModel(FamilySymbolName, BlockHeight, IsChangeSite, IsCreateDown);
+            RevitModel.CreateCrossElementsInModel(FamilySymbolName, BlockHeight, IsChangeSite, IsCreateDown, RotationAngle);
             SaveSettings();
         }
 
