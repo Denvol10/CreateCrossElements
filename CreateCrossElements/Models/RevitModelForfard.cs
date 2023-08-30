@@ -83,7 +83,10 @@ namespace CreateCrossElements
         }
         #endregion
 
+        public void CreateCrossElementsInModel(FamilySymbolSelector familySymbolName, double blockHeight, bool isChangeSite, bool isCreateDown)
+        {
 
+        }
 
         #region Получение типоразмера по имени
         private FamilySymbol GetFamilySymbolByName(FamilySymbolSelector familyAndSymbolName)

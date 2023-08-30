@@ -113,6 +113,26 @@ namespace CreateCrossElements.ViewModels
         }
         #endregion
 
+        #region Создать поперечные элементы
+        public ICommand CreateCrossElementsCommand { get; }
+
+        private void OnCreateCrossElementsCommandExecuted(object parameter)
+        {
+            RevitModel.CreateCrossElementsInModel(FamilySymbolName, BlockHeight, IsChangeSite, IsCreateDown);
+            SaveSettings();
+        }
+
+        private bool CanCreateCrossElementsCommandExecute(object parameter)
+        {
+            if (string.IsNullOrEmpty(BlockElementIds))
+            {
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
+
         #region Закрыть окно
         public ICommand CloseWindowCommand { get; }
 
@@ -172,6 +192,7 @@ namespace CreateCrossElements.ViewModels
 
             #region Команды
             GetBlockElementsCommand = new LambdaCommand(OnGetBlockElementsCommandExecuted, CanGetBlockElementsCommandExecute);
+            CreateCrossElementsCommand = new LambdaCommand(OnCreateCrossElementsCommandExecuted, CanCreateCrossElementsCommandExecute);
             CloseWindowCommand = new LambdaCommand(OnCloseWindowCommandExecuted, CanCloseWindowCommandExecute);
             #endregion
         }
