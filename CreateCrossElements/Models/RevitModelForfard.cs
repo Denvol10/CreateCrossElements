@@ -106,7 +106,7 @@ namespace CreateCrossElements
             {
                 trans.Start();
                 var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(3), blockHeight);
-                foreach (var point in superstructureBlock.GetPointsForCrossElements(isChangeSite))
+                foreach (var point in superstructureBlock.GetPointsForCrossElements(isChangeSite, rotationAngle))
                 {
                     Doc.FamilyCreate.NewReferencePoint(point.First);
                     Doc.FamilyCreate.NewReferencePoint(point.Second);
