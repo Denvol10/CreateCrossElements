@@ -56,7 +56,7 @@ namespace CreateCrossElements.Models
         public List<(XYZ First, XYZ Second, XYZ Third)> GetPointsForCrossElements(bool isChangeSite, double rotationAngle)
         {
             var adaptivePoints = new List<(XYZ, XYZ, XYZ)>(CountCrossSection);
-            rotationAngle = UnitUtils.ConvertToInternalUnits(rotationAngle, UnitTypeId.Degrees);
+            rotationAngle = UnitUtils.ConvertToInternalUnits(90 - rotationAngle, UnitTypeId.Degrees);
             foreach(var axisPoint in PointsOnAxis)
             {
                 XYZ firstPoint = axisPoint + NormalVector * BlockHeight;
