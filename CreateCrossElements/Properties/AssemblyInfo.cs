@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RevitWPFTemplate")]
+[assembly: AssemblyTitle("CreateCrossElements")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RevitWPFTemplate")]
+[assembly: AssemblyProduct("CreateCrossElements")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bbbef323-bd38-4257-af1a-43281edc9f8b")]
+[assembly: Guid("d38ed117-04ee-464c-b430-221ce17c7d38")]
 
 // Version information for an assembly consists of the following four values:
 //
