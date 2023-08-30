@@ -10,6 +10,8 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.DB.Architecture;
 using System.Collections.ObjectModel;
+using CreateCrossElements.Models;
+using CreateCrossElements.Models.Filters;
 
 namespace CreateCrossElements
 {
@@ -28,7 +30,21 @@ namespace CreateCrossElements
             Doc = uiapp.ActiveUIDocument.Document;
         }
 
+        #region Блоки пролетного строения
+        public List<Element> BlockElements { get; set; }
 
+        private string _blockElementIds;
+        public string BlockElementIds
+        {
+            get => _blockElementIds;
+            set => _blockElementIds = value;
+        }
+
+        public void GetBlockElementsBySelection()
+        {
+            BlockElements = RevitGeometryUtils.GetElementsBySelection(Uiapp, new GenericModelCategoryFilter(), out _blockElementIds);
+        }
+        #endregion
 
     }
 }

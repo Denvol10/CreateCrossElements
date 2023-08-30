@@ -35,9 +35,50 @@ namespace CreateCrossElements.ViewModels
         }
         #endregion
 
+        #region Блоки пролетного строения
+        private string _blockElementIds;
+        public string BlockElementIds
+        {
+            get => _blockElementIds;
+            set => Set(ref _blockElementIds, value);
+        }
+        #endregion
+
+
+
         #region Команды
 
+        #region Получение блоков пролетного строения
+        public ICommand GetBlockElementsCommand { get; }
 
+        private void OnGetBlockElementsCommandExecuted(object parameter)
+        {
+            RevitCommand.mainView.Hide();
+            RevitModel.GetBlockElementsBySelection();
+            BlockElementIds = RevitModel.BlockElementIds;
+            RevitCommand.mainView.ShowDialog();
+        }
+
+        private bool CanGetBlockElementsCommandExecute(object parameter)
+        {
+            return true;
+        }
+        #endregion
+
+        #region Закрыть окно
+        public ICommand CloseWindowCommand { get; }
+
+        private void OnCloseWindowCommandExecuted(object parameter)
+        {
+            //SaveSettings();
+            RevitCommand.mainView.Close();
+        }
+
+        private bool CanCloseWindowCommandExecute(object parameter)
+        {
+            return true;
+        }
+        #endregion
 
         #endregion
 
@@ -47,8 +88,8 @@ namespace CreateCrossElements.ViewModels
             RevitModel = revitModel;
 
             #region Команды
-
-
+            GetBlockElementsCommand = new LambdaCommand(OnGetBlockElementsCommandExecuted, CanGetBlockElementsCommandExecute);
+            CloseWindowCommand = new LambdaCommand(OnCloseWindowCommandExecuted, CanCloseWindowCommandExecute);
             #endregion
         }
 

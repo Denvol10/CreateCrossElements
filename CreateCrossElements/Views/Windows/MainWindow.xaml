@@ -10,12 +10,130 @@
         Background="#f0f0f0"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Height="450"
+        Height="282"
         Width="350">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="TextAboveButton"
+               TargetType="TextBlock">
+            <Setter Property="Height"
+                    Value="15" />
+            <Setter Property="TextAlignment"
+                    Value="Center" />
+        </Style>
+        <Style x:Key="SelectButton"
+               TargetType="Button">
+            <Setter Property="Width"
+                    Value="100" />
+            <Setter Property="Height"
+                    Value="22" />
+            <Setter Property="Content"
+                    Value="Выбрать" />
+            <Setter Property="Background"
+                    Value="#fdfdfd" />
+            <Setter Property="Margin"
+                    Value="0,2,0,0" />
+            <Setter Property="VerticalAlignment"
+                    Value="Bottom" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius"
+                            Value="4" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="SelectedItemsBox"
+               TargetType="TextBox">
+            <Setter Property="IsReadOnly"
+                    Value="True" />
+            <Setter Property="TextWrapping"
+                    Value="Wrap" />
+            <Setter Property="Width"
+                    Value="155" />
+            <Setter Property="Height"
+                    Value="45" />
+            <Setter Property="VerticalAlignment"
+                    Value="Bottom" />
+        </Style>
+        <Style x:Key="BorderGroupStyle"
+               TargetType="GroupBox">
+            <Setter Property="BorderBrush"
+                    Value="#818181" />
+            <Setter Property="BorderThickness"
+                    Value="0.5" />
+            <Setter Property="Margin"
+                    Value="2,0,3,0" />
+        </Style>
+    </Window.Resources>
     <StackPanel>
-        
+        <GroupBox Header="Блоки пролетного строения"
+                  Style="{StaticResource BorderGroupStyle}">
+            <StackPanel>
+                <UniformGrid Columns="2">
+                    <UniformGrid Rows="2">
+                        <TextBlock Text="Блоки"
+                                   Style="{StaticResource TextAboveButton}" />
+                        <Button Style="{StaticResource SelectButton}"
+                                Command="{Binding GetBlockElementsCommand}" />
+                    </UniformGrid>
+                    <TextBox Text="{Binding BlockElementIds}"
+                             Style="{StaticResource SelectedItemsBox}" />
+                </UniformGrid>
+                <DockPanel Margin="0,4,0,0">
+                    <TextBlock Text="Высота блока, мм"
+                               Style="{StaticResource TextAboveButton}"
+                               Margin="35,0,0,0" />
+                    <TextBox Text="{Binding CoverageThickness, UpdateSourceTrigger=PropertyChanged}"
+                             Height="20"
+                             Width="50"
+                             HorizontalAlignment="Right"
+                             TextAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             Margin="0,0,107,0" />
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Поперечные элементы"
+                  Style="{StaticResource BorderGroupStyle}">
+            <UniformGrid Columns="2">
+                <UniformGrid Rows="2"
+                             Height="60">
+                    <TextBlock Text="Семейство элемента"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource TextAboveButton}" />
+                    <ComboBox Width="150"
+                              Height="22"
+                              VerticalAlignment="Center"
+                              ItemsSource="{Binding GenericModelFamilySymbols}"
+                              SelectedItem="{Binding FamilySymbolName}" />
+                </UniformGrid>
+                <UniformGrid Rows="2">
+                    <CheckBox Content="Изменить сторону"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Margin="10,5,0,0"
+                              IsChecked="{Binding IsReversed}" />
+                    <CheckBox Content="Создать снизу"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Margin="10,5,0,0"
+                              IsChecked="{Binding IsMirrored}" />
+                </UniformGrid>
+            </UniformGrid>
+        </GroupBox>
+        <GroupBox Header="Создание"
+                  Style="{StaticResource BorderGroupStyle}">
+            <UniformGrid Columns="2"
+                         Margin="0,12,0,5">
+                <Button Content="Создать"
+                        Style="{StaticResource SelectButton}"
+                        Command="{Binding CreateBlocksCommand}" />
+                <Button Content="Отмена"
+                        Style="{StaticResource SelectButton}"
+                        Command="{Binding CloseWindowCommand}" />
+            </UniformGrid>
+        </GroupBox>
     </StackPanel>
 </Window>
