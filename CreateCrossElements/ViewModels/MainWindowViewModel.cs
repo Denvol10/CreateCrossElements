@@ -85,6 +85,15 @@ namespace CreateCrossElements.ViewModels
         }
         #endregion
 
+        #region Построить поперечный элемент снизу блока
+        private bool _isCreateDown = Properties.Settings.Default.IsCreateDown;
+        public bool IsCreateDown
+        {
+            get => _isCreateDown;
+            set => Set(ref _isCreateDown, value);
+        }
+        #endregion
+
         #region Команды
 
         #region Получение блоков пролетного строения
@@ -127,6 +136,7 @@ namespace CreateCrossElements.ViewModels
             Properties.Settings.Default.FamilySymbolIndex = GenericModelFamilySymbols.IndexOf(FamilySymbolName);
             Properties.Settings.Default.BlockHeight = BlockHeight;
             Properties.Settings.Default.IsChangeSite = IsChangeSite;
+            Properties.Settings.Default.IsCreateDown = IsCreateDown;
             Properties.Settings.Default.Save();
         }
 

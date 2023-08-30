@@ -70,5 +70,17 @@ namespace CreateCrossElements.Properties {
                 this["IsChangeSite"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsCreateDown {
+            get {
+                return ((bool)(this["IsCreateDown"]));
+            }
+            set {
+                this["IsCreateDown"] = value;
+            }
+        }
     }
 }

@@ -119,7 +119,7 @@
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               Margin="10,5,0,0"
-                              IsChecked="{Binding IsMirrored}" />
+                              IsChecked="{Binding IsCreateDown}" />
                 </UniformGrid>
             </UniformGrid>
         </GroupBox>
