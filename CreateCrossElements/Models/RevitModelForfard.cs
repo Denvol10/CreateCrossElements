@@ -92,14 +92,27 @@ namespace CreateCrossElements
         {
             FamilySymbol fSymbol = GetFamilySymbolByName(familyAndSymbolName);
 
-            string path = @"O:\Revit Infrastructure Tools\CreateCrossElements\CreateCrossElements\result.txt";
-            using(StreamWriter sw = new StreamWriter(path, false, Encoding.Default))
+            //string path = @"O:\Revit Infrastructure Tools\CreateCrossElements\CreateCrossElements\result.txt";
+            //using(StreamWriter sw = new StreamWriter(path, false, Encoding.Default))
+            //{
+            //    var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(2));
+            //    foreach(var parameter in superstructureBlock.BlockParameters)
+            //    {
+            //        sw.WriteLine(parameter);
+            //    }
+            //}
+
+            using(Transaction trans = new Transaction(Doc, "Create Cross Elements"))
             {
+                trans.Start();
                 var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(2));
-                foreach(var parameter in superstructureBlock.BlockParameters)
+                foreach(var point in superstructureBlock.GetPointsOnAxis())
                 {
-                    sw.WriteLine(parameter);
+                    Doc.FamilyCreate.NewReferencePoint(point);
                 }
+
+
+                trans.Commit();
             }
         }
 

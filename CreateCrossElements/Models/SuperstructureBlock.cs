@@ -22,6 +22,17 @@ namespace CreateCrossElements.Models
             BlockParameters = GetCrossSectionPlacementParameters();
         }
 
+        public List<XYZ> GetPointsOnAxis()
+        {
+            var points = new List<XYZ>(CountCrossSection);
+            foreach(var parameter in BlockParameters)
+            {
+                points.Add(BlockAxis.Evaluate(parameter, true));
+            }
+
+            return points;
+        }
+
         // Получение линии по низу блока
         private static Line GetBlockAxis(Document doc, Element blockElem)
         {
