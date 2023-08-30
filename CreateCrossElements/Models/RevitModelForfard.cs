@@ -105,8 +105,8 @@ namespace CreateCrossElements
             using(Transaction trans = new Transaction(Doc, "Create Cross Elements"))
             {
                 trans.Start();
-                var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(2));
-                foreach(var point in superstructureBlock.GetPointsOnAxis())
+                var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(3), blockHeight);
+                foreach (var point in superstructureBlock.GetFirstCrossElementPoints(Doc))
                 {
                     Doc.FamilyCreate.NewReferencePoint(point);
                 }

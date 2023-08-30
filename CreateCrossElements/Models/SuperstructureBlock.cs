@@ -4,28 +4,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace CreateCrossElements.Models
 {
     public class SuperstructureBlock
     {
         public Element BlockElement { get; set; }
+        public double BlockHeight { get; set; }
         public Line BlockAxis { get; set; }
         public int CountCrossSection { get; set; }
         public List<double> BlockParameters { get; set; }
 
-        public SuperstructureBlock(Document doc, Element blockElem)
+        public SuperstructureBlock(Document doc, Element blockElem, double height)
         {
             BlockElement = blockElem;
+            BlockHeight = height;
             BlockAxis = GetBlockAxis(doc, blockElem);
             CountCrossSection = GetCountCrossSection();
             BlockParameters = GetCrossSectionPlacementParameters();
         }
 
-        public List<XYZ> GetPointsOnAxis()
+        public List<XYZ> GetFirstCrossElementPoints(Document doc)
+        {
+            double height = UnitUtils.ConvertToInternalUnits(BlockHeight, UnitTypeId.Millimeters);
+            var points = GetPointsOnAxis().Select(p => p + GetNormalVector(doc) * height).ToList();
+
+            return points;
+        }
+
+        private List<XYZ> GetPointsOnAxis()
         {
             var points = new List<XYZ>(CountCrossSection);
-            foreach(var parameter in BlockParameters)
+            foreach (var parameter in BlockParameters)
             {
                 points.Add(BlockAxis.Evaluate(parameter, true));
             }
@@ -33,8 +44,29 @@ namespace CreateCrossElements.Models
             return points;
         }
 
+        private XYZ GetNormalVector(Document doc)
+        {
+            var blockAdaptivePoints = AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(BlockElement as FamilyInstance);
+            var firstReferencePoint = doc.GetElement(blockAdaptivePoints.FirstOrDefault()) as ReferencePoint;
+            var secondReferencePoint = doc.GetElement(blockAdaptivePoints.ElementAt(1)) as ReferencePoint;
+            var thirdReferencePoint = doc.GetElement(blockAdaptivePoints.ElementAt(2)) as ReferencePoint;
+
+            XYZ firstPoint = firstReferencePoint.Position;
+            XYZ secondPoint = secondReferencePoint.Position;
+            XYZ thirdPoint = thirdReferencePoint.Position;
+
+            XYZ normalVector = (secondPoint - firstPoint).CrossProduct(thirdPoint - firstPoint).Normalize();
+
+            if (normalVector.Z < 0)
+            {
+                normalVector = normalVector.Negate();
+            }
+
+            return normalVector;
+        }
+
         // Получение линии по низу блока
-        private static Line GetBlockAxis(Document doc, Element blockElem)
+        private Line GetBlockAxis(Document doc, Element blockElem)
         {
             var blockAdaptivePoints = AdaptiveComponentInstanceUtils.GetInstancePlacementPointElementRefIds(blockElem as FamilyInstance);
             var firstReferencePoint = doc.GetElement(blockAdaptivePoints.FirstOrDefault()) as ReferencePoint;
