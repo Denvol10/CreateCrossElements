@@ -114,7 +114,7 @@
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               Margin="10,5,0,0"
-                              IsChecked="{Binding IsReversed}" />
+                              IsChecked="{Binding IsChangeSite}" />
                     <CheckBox Content="Создать снизу"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"

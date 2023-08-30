@@ -11,5 +11,8 @@
     <Setting Name="BlockHeight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
+    <Setting Name="IsChangeSite" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

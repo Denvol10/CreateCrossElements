@@ -58,5 +58,17 @@ namespace CreateCrossElements.Properties {
                 this["BlockHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsChangeSite {
+            get {
+                return ((bool)(this["IsChangeSite"]));
+            }
+            set {
+                this["IsChangeSite"] = value;
+            }
+        }
     }
 }

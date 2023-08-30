@@ -76,7 +76,14 @@ namespace CreateCrossElements.ViewModels
         }
         #endregion
 
-
+        #region Сторона построения
+        private bool _isChangeSite = Properties.Settings.Default.IsChangeSite;
+        public bool IsChangeSite
+        {
+            get => _isChangeSite;
+            set => Set(ref _isChangeSite, value);
+        }
+        #endregion
 
         #region Команды
 
@@ -119,6 +126,7 @@ namespace CreateCrossElements.ViewModels
             Properties.Settings.Default.BlockElementIds = BlockElementIds;
             Properties.Settings.Default.FamilySymbolIndex = GenericModelFamilySymbols.IndexOf(FamilySymbolName);
             Properties.Settings.Default.BlockHeight = BlockHeight;
+            Properties.Settings.Default.IsChangeSite = IsChangeSite;
             Properties.Settings.Default.Save();
         }
 
