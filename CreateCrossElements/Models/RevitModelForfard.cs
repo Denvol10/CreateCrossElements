@@ -83,5 +83,27 @@ namespace CreateCrossElements
         }
         #endregion
 
+
+
+        #region Получение типоразмера по имени
+        private FamilySymbol GetFamilySymbolByName(FamilySymbolSelector familyAndSymbolName)
+        {
+            var familyName = familyAndSymbolName.FamilyName;
+            var symbolName = familyAndSymbolName.SymbolName;
+
+            Family family = new FilteredElementCollector(Doc).OfClass(typeof(Family)).Where(f => f.Name == familyName).First() as Family;
+            var symbolIds = family.GetFamilySymbolIds();
+            foreach (var symbolId in symbolIds)
+            {
+                FamilySymbol fSymbol = (FamilySymbol)Doc.GetElement(symbolId);
+                if (fSymbol.get_Parameter(BuiltInParameter.SYMBOL_NAME_PARAM).AsString() == symbolName)
+                {
+                    return fSymbol;
+                }
+            }
+            return null;
+        }
+        #endregion
+
     }
 }

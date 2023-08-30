@@ -85,7 +85,7 @@
                     <TextBlock Text="Высота блока, мм"
                                Style="{StaticResource TextAboveButton}"
                                Margin="35,0,0,0" />
-                    <TextBox Text="{Binding CoverageThickness, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding BlockHeight, UpdateSourceTrigger=PropertyChanged}"
                              Height="20"
                              Width="50"
                              HorizontalAlignment="Right"

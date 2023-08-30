@@ -67,6 +67,17 @@ namespace CreateCrossElements.ViewModels
         private int _familySymbolIndex = Properties.Settings.Default.FamilySymbolIndex;
         #endregion
 
+        #region Высота блока
+        private double _blockHeight = Properties.Settings.Default.BlockHeight;
+        public double BlockHeight
+        {
+            get => _blockHeight;
+            set => Set(ref _blockHeight, value);
+        }
+        #endregion
+
+
+
         #region Команды
 
         #region Получение блоков пролетного строения
@@ -107,6 +118,7 @@ namespace CreateCrossElements.ViewModels
         {
             Properties.Settings.Default.BlockElementIds = BlockElementIds;
             Properties.Settings.Default.FamilySymbolIndex = GenericModelFamilySymbols.IndexOf(FamilySymbolName);
+            Properties.Settings.Default.BlockHeight = BlockHeight;
             Properties.Settings.Default.Save();
         }
 

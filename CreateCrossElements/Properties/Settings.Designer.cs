@@ -46,5 +46,17 @@ namespace CreateCrossElements.Properties {
                 this["FamilySymbolIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public double BlockHeight {
+            get {
+                return ((double)(this["BlockHeight"]));
+            }
+            set {
+                this["BlockHeight"] = value;
+            }
+        }
     }
 }
