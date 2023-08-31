@@ -10,7 +10,7 @@
         Background="#f0f0f0"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Height="292"
+        Height="283"
         Width="350">
     <Window.DataContext>
         <vm:MainWindowViewModel />
@@ -81,7 +81,7 @@
                     <TextBox Text="{Binding BlockElementIds}"
                              Style="{StaticResource SelectedItemsBox}" />
                 </UniformGrid>
-                <DockPanel Margin="0,4,0,0">
+                <DockPanel Margin="0,10,0,0">
                     <TextBlock Text="Высота блока, мм"
                                Style="{StaticResource TextAboveButton}"
                                Margin="35,0,0,0" />
@@ -98,8 +98,8 @@
         <GroupBox Header="Поперечные элементы"
                   Style="{StaticResource BorderGroupStyle}">
             <UniformGrid Columns="2">
-                <UniformGrid Rows="3"
-                             Height="70">
+                <UniformGrid Rows="2"
+                             Height="55">
                     <TextBlock Text="Семейство элемента"
                                VerticalAlignment="Center"
                                Style="{StaticResource TextAboveButton}" />
