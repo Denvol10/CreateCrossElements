@@ -14,9 +14,6 @@
     <Setting Name="IsChangeSite" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="IsCreateDown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="RotationAngle" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>

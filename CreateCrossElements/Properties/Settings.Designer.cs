@@ -73,18 +73,6 @@ namespace CreateCrossElements.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsCreateDown {
-            get {
-                return ((bool)(this["IsCreateDown"]));
-            }
-            set {
-                this["IsCreateDown"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public double RotationAngle {
             get {

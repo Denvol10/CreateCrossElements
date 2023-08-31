@@ -92,7 +92,6 @@ namespace CreateCrossElements
         public void CreateCrossElementsInModel(FamilySymbolSelector familyAndSymbolName,
                                                double blockHeight,
                                                bool isChangeSite,
-                                               bool isCreateDown,
                                                double rotationAngle)
         {
             FamilySymbol fSymbol = GetFamilySymbolByName(familyAndSymbolName);

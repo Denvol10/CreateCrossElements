@@ -10,7 +10,7 @@
         Background="#f0f0f0"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Height="302"
+        Height="292"
         Width="350">
     <Window.DataContext>
         <vm:MainWindowViewModel />
@@ -99,7 +99,7 @@
                   Style="{StaticResource BorderGroupStyle}">
             <UniformGrid Columns="2">
                 <UniformGrid Rows="3"
-                             Height="80">
+                             Height="70">
                     <TextBlock Text="Семейство элемента"
                                VerticalAlignment="Center"
                                Style="{StaticResource TextAboveButton}" />
@@ -109,17 +109,12 @@
                               ItemsSource="{Binding GenericModelFamilySymbols}"
                               SelectedItem="{Binding FamilySymbolName}" />
                 </UniformGrid>
-                <UniformGrid Rows="3">
+                <UniformGrid Rows="2">
                     <CheckBox Content="Изменить сторону"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               Margin="10,5,0,0"
                               IsChecked="{Binding IsChangeSite}" />
-                    <CheckBox Content="Создать снизу"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Left"
-                              Margin="10,5,0,0"
-                              IsChecked="{Binding IsCreateDown}" />
                     <DockPanel Margin="0,4,0,0">
                         <TextBlock Text="Угол поворота"
                                    Style="{StaticResource TextAboveButton}"

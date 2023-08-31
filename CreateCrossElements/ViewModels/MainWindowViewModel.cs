@@ -85,15 +85,6 @@ namespace CreateCrossElements.ViewModels
         }
         #endregion
 
-        #region Построить поперечный элемент снизу блока
-        private bool _isCreateDown = Properties.Settings.Default.IsCreateDown;
-        public bool IsCreateDown
-        {
-            get => _isCreateDown;
-            set => Set(ref _isCreateDown, value);
-        }
-        #endregion
-
         #region Угол поворота поперечного элемента
         private double _rotationAngle = Properties.Settings.Default.RotationAngle;
         public double RotationAngle
@@ -127,7 +118,7 @@ namespace CreateCrossElements.ViewModels
 
         private void OnCreateCrossElementsCommandExecuted(object parameter)
         {
-            RevitModel.CreateCrossElementsInModel(FamilySymbolName, BlockHeight, IsChangeSite, IsCreateDown, RotationAngle);
+            RevitModel.CreateCrossElementsInModel(FamilySymbolName, BlockHeight, IsChangeSite, RotationAngle);
             SaveSettings();
         }
 
@@ -165,7 +156,6 @@ namespace CreateCrossElements.ViewModels
             Properties.Settings.Default.FamilySymbolIndex = GenericModelFamilySymbols.IndexOf(FamilySymbolName);
             Properties.Settings.Default.BlockHeight = BlockHeight;
             Properties.Settings.Default.IsChangeSite = IsChangeSite;
-            Properties.Settings.Default.IsCreateDown = IsCreateDown;
             Properties.Settings.Default.RotationAngle = RotationAngle;
             Properties.Settings.Default.Save();
         }
