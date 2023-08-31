@@ -108,16 +108,6 @@ namespace CreateCrossElements
                 }
             }
 
-            //string path = @"O:\Revit Infrastructure Tools\CreateCrossElements\CreateCrossElements\result.txt";
-            //using(StreamWriter sw = new StreamWriter(path, false, Encoding.Default))
-            //{
-            //    var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(2));
-            //    foreach(var parameter in superstructureBlock.BlockParameters)
-            //    {
-            //        sw.WriteLine(parameter);
-            //    }
-            //}
-
             using (Transaction trans = new Transaction(Doc, "Create Cross Elements"))
             {
                 trans.Start();
@@ -147,7 +137,6 @@ namespace CreateCrossElements
             }
         }
         #endregion
-
 
         #region Получение типоразмера по имени
         private FamilySymbol GetFamilySymbolByName(FamilySymbolSelector familyAndSymbolName)

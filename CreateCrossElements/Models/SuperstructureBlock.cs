@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace CreateCrossElements.Models
 {
@@ -31,27 +30,6 @@ namespace CreateCrossElements.Models
             NormalVector = GetNormalVector(doc);
             YVector = GetYVector(doc);
         }
-
-        //public List<XYZ> GetFirstCrossElementPoints()
-        //{
-        //    var points = PointsOnAxis.Select(p => p + NormalVector * BlockHeight).ToList();
-
-        //    return points;
-        //}
-
-        //public List<XYZ> GetSecondCrossElementPoints()
-        //{
-        //    var points = PointsOnAxis.Select(p => p + NormalVector * (BlockHeight - _distanceBetweenAdaptivePoints)).ToList();
-
-        //    return points;
-        //}
-
-        //public List<XYZ> GetThirdCrossElementPoints(bool isChangeSite)
-        //{
-        //    var points = PointsOnAxis.Select(p => p + NormalVector * BlockHeight + YVector * _distanceBetweenAdaptivePoints).ToList();
-
-        //    return points;
-        //}
 
         public List<List<XYZ>> GetPointsForCrossElements(bool isChangeSite, double rotationAngle)
         {
