@@ -84,6 +84,11 @@ namespace CreateCrossElements
         }
         #endregion
 
+        #region Созданные элементы в модели
+        private ICollection<ElementId> ElementSet { get; set; } = null;
+        #endregion
+
+        #region Создание поперечных элементов в модели
         public void CreateCrossElementsInModel(FamilySymbolSelector familyAndSymbolName,
                                                double blockHeight,
                                                bool isChangeSite,
@@ -91,6 +96,18 @@ namespace CreateCrossElements
                                                double rotationAngle)
         {
             FamilySymbol fSymbol = GetFamilySymbolByName(familyAndSymbolName);
+
+            var creationDataList = new List<Autodesk.Revit.Creation.FamilyInstanceCreationData>();
+
+            foreach(var block in BlockElements)
+            {
+                var superstructureBlock = new SuperstructureBlock(Doc, block, blockHeight);
+                var blockAdaptivePoints = superstructureBlock.GetPointsForCrossElements(isChangeSite, rotationAngle);
+                foreach(var adaptivePoints in blockAdaptivePoints)
+                {
+                    creationDataList.Add(new Autodesk.Revit.Creation.FamilyInstanceCreationData(fSymbol, adaptivePoints));
+                }
+            }
 
             //string path = @"O:\Revit Infrastructure Tools\CreateCrossElements\CreateCrossElements\result.txt";
             //using(StreamWriter sw = new StreamWriter(path, false, Encoding.Default))
@@ -102,21 +119,36 @@ namespace CreateCrossElements
             //    }
             //}
 
-            using(Transaction trans = new Transaction(Doc, "Create Cross Elements"))
+            using (Transaction trans = new Transaction(Doc, "Create Cross Elements"))
             {
                 trans.Start();
-                var superstructureBlock = new SuperstructureBlock(Doc, BlockElements.ElementAt(3), blockHeight);
-                foreach (var point in superstructureBlock.GetPointsForCrossElements(isChangeSite, rotationAngle))
+                if (!(ElementSet is null))
                 {
-                    Doc.FamilyCreate.NewReferencePoint(point.First);
-                    Doc.FamilyCreate.NewReferencePoint(point.Second);
-                    Doc.FamilyCreate.NewReferencePoint(point.Third);
+                    Doc.Delete(ElementSet);
                 }
 
+                if (!fSymbol.IsActive)
+                {
+                    fSymbol.Activate();
+                }
+
+                if (Doc.IsFamilyDocument)
+                {
+                    ElementSet = Doc.FamilyCreate.NewFamilyInstances2(creationDataList);
+                }
+                else
+                {
+                    ElementSet = Doc.Create.NewFamilyInstances2(creationDataList);
+                }
 
                 trans.Commit();
+
+                Uidoc.ShowElements(ElementSet.FirstOrDefault());
+                Uidoc.RefreshActiveView();
             }
         }
+        #endregion
+
 
         #region Получение типоразмера по имени
         private FamilySymbol GetFamilySymbolByName(FamilySymbolSelector familyAndSymbolName)

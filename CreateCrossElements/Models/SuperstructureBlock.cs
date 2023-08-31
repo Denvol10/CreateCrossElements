@@ -53,11 +53,12 @@ namespace CreateCrossElements.Models
         //    return points;
         //}
 
-        public List<(XYZ First, XYZ Second, XYZ Third)> GetPointsForCrossElements(bool isChangeSite, double rotationAngle)
+        public List<List<XYZ>> GetPointsForCrossElements(bool isChangeSite, double rotationAngle)
         {
-            var adaptivePoints = new List<(XYZ, XYZ, XYZ)>(CountCrossSection);
+            var blockAdaptivePoints = new List<List<XYZ>>();
+
             rotationAngle = UnitUtils.ConvertToInternalUnits(90 - rotationAngle, UnitTypeId.Degrees);
-            foreach(var axisPoint in PointsOnAxis)
+            foreach (var axisPoint in PointsOnAxis)
             {
                 XYZ firstPoint = axisPoint + NormalVector * BlockHeight;
                 XYZ secondPoint = axisPoint + NormalVector * (BlockHeight - _distanceBetweenAdaptivePoints);
@@ -72,16 +73,19 @@ namespace CreateCrossElements.Models
 
                 }
 
-                if(rotationAngle != 0)
+                if (rotationAngle != 0)
                 {
                     var transform = Transform.CreateRotationAtPoint(firstPoint - secondPoint, rotationAngle, firstPoint);
                     thirdPoint = transform.OfPoint(thirdPoint);
                 }
 
-                adaptivePoints.Add((firstPoint, secondPoint, thirdPoint));
+                var adaptivePoints = new List<XYZ>() { firstPoint, secondPoint, thirdPoint };
+
+                blockAdaptivePoints.Add(adaptivePoints);
             }
 
-            return adaptivePoints;
+
+            return blockAdaptivePoints;
         }
 
         private List<XYZ> GetPointsOnAxis()
