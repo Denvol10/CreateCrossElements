@@ -57,7 +57,7 @@ namespace CreateCrossElements.Models
         {
             var blockAdaptivePoints = new List<List<XYZ>>();
 
-            rotationAngle = UnitUtils.ConvertToInternalUnits(90 - rotationAngle, UnitTypeId.Degrees);
+            double convertedRotationAngle = UnitUtils.ConvertToInternalUnits(90 - rotationAngle, UnitTypeId.Degrees);
             foreach (var axisPoint in PointsOnAxis)
             {
                 XYZ firstPoint = axisPoint + NormalVector * BlockHeight;
@@ -75,7 +75,7 @@ namespace CreateCrossElements.Models
 
                 if (rotationAngle != 0)
                 {
-                    var transform = Transform.CreateRotationAtPoint(firstPoint - secondPoint, rotationAngle, firstPoint);
+                    var transform = Transform.CreateRotationAtPoint(firstPoint - secondPoint, convertedRotationAngle, firstPoint);
                     thirdPoint = transform.OfPoint(thirdPoint);
                 }
 
